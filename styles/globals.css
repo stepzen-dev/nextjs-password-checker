@@ -1,26 +1,50 @@
+:root {
+  --color-background: #fae3ea;
+  --color-primary: #fc8080;
+  --font-family-base: Poppin, sans-serif;
+  --font-size-h1: 1.25rem;
+  --font-size-h2: 1rem;
+}
+
 html,
 body {
+ 
+  
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+
 
 * {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+
+form {
+
+  margin: 4rem;
+
+  
+}
+
+form label {
+
+  margin: 1rem;
+
+}
+
+form input {
+  margin: 1rem;
+
+}
+
+form button{
+  margin: 1rem;
+}
+
+h1 {
+  margin: 1rem;
 }

@@ -1,0 +1,65 @@
+
+type CandidatesEntry {
+  """
+  CandidatesEntry type instrospected from Enzoic passwords API
+  """
+  exposureCount: Int
+  md5: String
+  relativeExposureFrequency: Int
+  revealedInExposure: Boolean
+  sha1: String
+  sha256: String
+}
+
+
+type Root {
+  """
+  root type returning Enzoic result
+  """
+  candidates: [CandidatesEntry]
+}
+
+
+type HashRoot {
+  """
+  HashRoot type instrospected from hashify API
+  """
+  Digest: String
+  DigestEnc: String
+  Key: String
+  Type: String
+}
+
+
+type Query {
+    """
+  Query created by sequencing queries to the hashify and enzioc API. Uses custom StepZen @sequence directive. https://stepzen.com/docs/custom-graphql-directives/directives#-sequence
+  """
+
+  myQuery(partialMD5: String, partialSHA1: String, partialSHA256: String): Root
+  """
+  Query to the enzoic API. Uses custom StepZen @rest directive. https://stepzen.com/docs/custom-graphql-directives/directives#-rest
+  """
+    @rest(
+      method: POST
+      endpoint: "https://api.enzoic.com/passwords"
+      headers: [{ name: "authorization", value: "$authorization_7ec88bee6e;" }]
+      configuration: "curl_import_config"
+    )
+
+  myHashQuery(value: String): HashRoot
+  """
+  Query to the hashify API. Uses custom StepZen @rest directive. https://stepzen.com/docs/custom-graphql-directives/directives#-rest
+  """
+    @rest(endpoint: "https://api.hashify.net/hash/sha1/hex")
+
+  hashEntryAndCheckPwn(value: String) : Root
+  """
+  Query created by sequencing queries to the hashify and enzioc API. Uses custom StepZen @sequence directive. https://stepzen.com/docs/custom-graphql-directives/directives#-sequence
+  """
+    @sequence(
+            steps: [
+                { query: "myHashQuery"}
+                { query: "myQuery", arguments: [{name: "partialSHA1", field: "Digest"}] }
+                ])
+}

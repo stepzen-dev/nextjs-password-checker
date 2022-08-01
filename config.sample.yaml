@@ -1,0 +1,4 @@
+configurationset:
+  - configuration:
+      name: curl_import_config
+      authorization_7ec88bee6e: Basic KEY_HERE

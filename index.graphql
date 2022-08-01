@@ -1,0 +1,3 @@
+schema @sdl(files: [ "password_schema/index.graphql"]) {
+  query: Query
+}
